@@ -41,23 +41,57 @@ Car car = new Car.Builder()
 ## 📦 Структура проекта
 
 ```
-car-sorting-system/
+SortingApp/
 │
-├── Car.java                          # Модель автомобиля + Builder
-├── SortStrategy.java                 # Интерфейс стратегии сортировки
-├── PowerYearModelSortStrategy.java   # Стратегия 1: Мощность→Год→Модель
-├── YearPowerModelSortStrategy.java   # Стратегия 2: Год→Мощность→Модель
-├── CarSorter.java                    # Контекст для Strategy
-├── DataValidator.java                # Валидация данных
-├── ValidationException.java          # Исключение валидации
-├── DataSource.java                   # Интерфейс источника данных
-├── ManualDataSource.java             # Ручной ввод
-├── FileDataSource.java               # Чтение из файла
-├── RandomDataSource.java             # Случайная генерация
-├── CarSortingApp.java                # Главный класс приложения
-├── cars.txt                          # Пример файла с данными
-└── README.md                         # Документация
+├── src/
+│   └── main/
+│       └── java/
+│       │    │
+│       │    ├── domain/                                  # Доменная модель
+│       │    │   └── Car.java                               # Модель автомобиля + Builder
+│       │    │
+│       │    ├── service/                                 # Бизнес-логика
+│       │    │   │
+│       │    │   ├── sorting/                             # Сервис сортировки
+│       │    │   │   ├── SortStrategy.java                  # Интерфейс стратегии
+│       │    │   │   ├── PowerYearModelSortStrategy.java    # Стратегия 1
+│       │    │   │   ├── YearPowerModelSortStrategy.java    # Стратегия 2
+│       │    │   │   └── CarSorter.java                     # Контекст Strategy
+│       │    │   │
+│       │    │   └── datasource/                          # Источники данных
+│       │    │       ├── DataSource.java                    # Интерфейс источника
+│       │    │       ├── ManualDataSource.java              # Ручной ввод
+│       │    │       ├── FileDataSource.java                # Чтение из файла
+│       │    │       └── RandomDataSource.java              # Генерация данных
+│       │    │
+│       │    ├── util/                                    # Утилиты и валидация
+│       │    │   ├── DataValidator.java                     # Валидация данных
+│       │    │   └── ValidationException.java               # Исключение валидации
+│       │    │
+│       │    └── ui/                                      # Пользовательский интерфейс
+│       │        └── CarSortingApp.java                     # Главный класс приложения
+│       │
+│       ├── resources/                                    # Ресурсы
+│       │   └── cars_valid.txt                              # Пример файла с корректными данными
+│       │   └── cars_invalid.txt                            # Пример файла с некорректными данными
+│       │
+│       │
+│       └── test/                                         # Тесты
+│
+│       
+├── .gitignore                                            # Git ignore правила
+└── README.md                                             # Документация
 ```
+
+### Описание пакетов
+
+| Пакет | Назначение |
+|-------|------------|
+| `domain` | Доменные модели и бизнес-объекты (Car) |
+| `service.sorting` | Стратегии сортировки и контекст |
+| `service.datasource` | Источники данных (Factory Method) |
+| `util` | Утилиты для валидации и обработки ошибок |
+| `ui` | Консольный интерфейс и точка входа |
 
 ## 🚀 Быстрый старт
 
