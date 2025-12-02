@@ -14,6 +14,9 @@ public class DataValidator {
         if (model == null || model.trim().isEmpty()) {
             return false;
         }
+        if (!model.trim().matches("[a-zA-Z0-9\\s-]+")) {
+            return false;
+        }
         if (model.length() > 50) {
             return false;
         }
@@ -34,18 +37,17 @@ public class DataValidator {
         }
         return true;
     }
-    public static boolean validateCar(){
-        boolean allValid = true;
-
+    public static void validateCar() throws ValidationException {
         if (!isValidModel(this.model)) {
-            allValid = false;
+            throw new ValidationException("Ошибка валидации модели: '" + this.model + "'");
         }
         if (!isValidPower(this.power)) {
-            allValid = false;
+            throw new ValidationException("Ошибка валидации мощности: '" + this.power + "' (ожидается от 1 до 2000)");
         }
         if (!isValidYear(this.year)) {
-            allValid = false;
+            final int CURRENT_YEAR = java.time.Year.now().getValue();
+            final int MIN_YEAR = 1886;
+            throw new ValidationException("Ошибка валидации года выпуска: '" + this.year + "' (ожидается от " + MIN_YEAR + " до " + CURRENT_YEAR + ")");
         }
-        return allValid;
     }
 }
