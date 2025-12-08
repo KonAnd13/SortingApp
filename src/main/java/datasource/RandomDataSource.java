@@ -9,6 +9,7 @@ import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 
 public class RandomDataSource implements DataSource {
 
@@ -43,14 +44,8 @@ public class RandomDataSource implements DataSource {
     private static final int CURRENT_YEAR = Year.now().getValue();
 
     @Override
-    public List<Car> loadCars(String countStr) {
-        int count;
-        try {
-            count = Integer.parseInt(countStr);
-            if (count <= 0) count = 10;
-        } catch (NumberFormatException e) {
-            count = 10;
-        }
+    public List<Car> loadCars() {
+        int count = requestCarCountFromUser();
 
         List<Car> cars = new ArrayList<>();
         for (int i = 0; i < count; i++) {
@@ -63,9 +58,30 @@ public class RandomDataSource implements DataSource {
                 System.err.println("Ошибка валидации сгенерированной машины: " + e.getMessage());
                 i--;
             }
-            cars.add(generateValidCar());
         }
         return cars;
+    }
+
+    private int requestCarCountFromUser() {
+        Scanner scanner = new Scanner(System.in);
+        int count = 0;
+        boolean valid = false;
+
+        while (!valid) {
+            System.out.print("Сколько автомобилей сгенерировать? Введите целое число: ");
+            if (scanner.hasNextInt()) {
+                count = scanner.nextInt();
+                if (count > 0) {
+                    valid = true;
+                } else {
+                    System.out.println("Пожалуйста, введите положительное число.");
+                }
+            } else {
+                System.out.println("Некорректный ввод. Пожалуйста, введите целое число.");
+                scanner.next();
+            }
+        }
+        return count;
     }
 
     private Car generateValidCar() {
