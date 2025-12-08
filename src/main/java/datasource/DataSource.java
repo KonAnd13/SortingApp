@@ -1,5 +1,8 @@
 package datasource;
 
+import domain.Car;
+import java.util.List;
+
 public interface DataSource {
-    List<Car> loadCars(int count);
+    List<Car> loadCars(String parameter);
 }
