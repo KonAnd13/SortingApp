@@ -109,9 +109,7 @@ public class CarSortingApp {
 
         SortStrategy<Car> strategy = new YearPowerModelSortStrategy();
 
-
         long startTime = System.currentTimeMillis();
-
 
         strategy.sort(cars);
 
@@ -128,8 +126,34 @@ public class CarSortingApp {
             return;
         }
 
-        if (cars.isEmpty()) {
-            System.out.println("\nСписок автомобилей пуст.");
+        // Используем метод displayCarsSimple() для показа данных
+        displayCarsSimple();
+    }
+
+    private void displayCarsSimple() {
+        if (cars == null || cars.isEmpty()) {
+            System.out.println("\n[INFO] Список автомобилей пуст.");
+            return;
+        }
+
+        System.out.println("\n=== СПИСОК АВТОМОБИЛЕЙ ===");
+        System.out.printf("Всего автомобилей: %d\n\n", cars.size());
+
+        for (int i = 0; i < cars.size(); i++) {
+            Car car = cars.get(i);
+            System.out.printf("%3d. %-25s %6d г.  %4d л.с.\n",
+                    i + 1,
+                    car.getModel(),
+                    car.getYear(),
+                    car.getPower());
+        }
+    }
+
+    // Дополнительные методы для разных форматов вывода (опционально)
+
+    private void displayCarsTable() {
+        if (cars == null || cars.isEmpty()) {
+            System.out.println("\n[INFO] Список автомобилей пуст.");
             return;
         }
 
@@ -151,6 +175,33 @@ public class CarSortingApp {
         }
     }
 
+    private void displayCarsWithBorders() {
+        if (cars == null || cars.isEmpty()) {
+            System.out.println("\n[INFO] Список автомобилей пуст.");
+            return;
+        }
+
+        System.out.println("\n=== СПИСОК АВТОМОБИЛЕЙ ===");
+        System.out.printf("Всего автомобилей: %d\n\n", cars.size());
+
+        System.out.println("┌─────┬──────────────────────────┬────────────┬────────────┐");
+        System.out.println("│ №   │ Модель                   │ Год выпуска│ Мощность   │");
+        System.out.println("├─────┼──────────────────────────┼────────────┼────────────┤");
+
+        for (int i = 0; i < cars.size(); i++) {
+            Car car = cars.get(i);
+            String model = car.getModel();
+            // Обрезаем длинные названия моделей
+            if (model.length() > 25) {
+                model = model.substring(0, 22) + "...";
+            }
+
+            System.out.printf("│ %-3d │ %-25s │ %-10d │ %-10d │\n",
+                    i + 1, model, car.getYear(), car.getPower());
+        }
+
+        System.out.println("└─────┴──────────────────────────┴────────────┴────────────┘");
+    }
 
     public static void main(String[] args) {
         CarSortingApp app = new CarSortingApp();
