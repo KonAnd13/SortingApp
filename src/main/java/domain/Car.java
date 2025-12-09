@@ -4,6 +4,8 @@ import java.util.Objects;
 
 public class Car {
 
+    private static final String CAR_STRING_FORMAT = "%s;%s;%s";
+
     private String model;
     private int power;
     private int year;
@@ -14,9 +16,10 @@ public class Car {
         this.year = year;
     }
 
+    /** Метод для записи данных в файл. */
     @Override
     public String toString() {
-        return "%s;%s;%s".formatted(this.model, this.power, this.year);
+        return CAR_STRING_FORMAT.formatted(this.model, this.power, this.year);
     }
 
     @Override
