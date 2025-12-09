@@ -1,6 +1,13 @@
-package service.sorting;
+package util;
 
 import domain.Car;
+import service.datasource.DataSource;
+import service.datasource.FileDataSource;
+import service.datasource.ManualDataSource;
+import service.datasource.RandomDataSource;
+import service.sorting.SortStrategy;
+import service.sorting.YearPowerModelSortStrategy;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -81,7 +88,7 @@ public class CarSortingApp {
                         dataSource = new ManualDataSource();
                         break;
                     case 3:
-                        dataSource = new FileDataSource();
+                        dataSource = new FileDataSource("src/main/resources/carsValid.txt");
                         break;
                     default:
                         System.out.println("Неверный выбор источника данных. Возврат в меню.");
@@ -116,7 +123,6 @@ public class CarSortingApp {
                 dataLoaded = false;
             }
         }
-    }
 
     private void showDataPreview() {
         if (cars.isEmpty()) {
