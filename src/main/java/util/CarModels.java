@@ -1,13 +1,10 @@
 package util;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 public class CarModels {
 
-    private static final Set<String> MODELS = Set.of(
+    public static final List<String> MODELS = List.of(
             "Toyota Camry", "Honda Civic", "Ford F-150", "Volkswagen Golf", "BMW 3 Series", "Mercedes-Benz C-Class", "Chevrolet Corvette", "Tesla Model 3", "Nissan GT-R",
             "Porsche 911", "Kia Rio", "Hyundai Solaris", "Lada Vesta", "Subaru Forester", "Jeep Wrangler", "Mazda MX-5", "Audi A4", "Lexus RX", "Volvo XC90", "Land Rover Defender",
             "Fiat 500", "Mini Cooper", "Aston Martin DB11", "Ferrari 488 GTB", "Lamborghini Huracán", "McLaren 720S", "Bugatti Chiron", "Toyota Corolla", "Honda CR-V", "Ford Focus",
@@ -30,8 +27,4 @@ public class CarModels {
             "Lincoln Corsair", "Maserati Quattroporte", "Mitsubishi Eclipse Cross", "Opel Grandland", "Peugeot 2008", "Porsche Taycan", "Renault Duster", "Subaru Crosstrek",
             "Suzuki Jimny", "Tesla Model X", "Toyota Highlander", "Volkswagen Arteon", "Vauxhall Corsa", "Wuling Mini EV", "XPeng P5", "Acura Integra", "Alfa Romeo 4C", "Aston Martin Valkyrie"
     );
-
-    public static String[] getModelsSet() {
-        return MODELS;
-    }
 }

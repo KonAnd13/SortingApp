@@ -20,8 +20,6 @@ public class RandomDataSource implements DataSource {
     private static final int MIN_YEAR = 1886;
     private static final int CURRENT_YEAR = Year.now().getValue();
 
-    private static final String[] MODEL_FROM_SET = CarModels.getModelsSet();
-
     @Override
     public List<Car> loadCars() {
         int count = requestCarCountFromUser();
@@ -64,7 +62,7 @@ public class RandomDataSource implements DataSource {
     }
 
     private Car generateValidCar() {
-        String model = MODEL_FROM_SET[random.nextInt(MODEL_FROM_SET.length)];
+        String model = CarModels.MODELS.get(random.nextInt(CarModels.MODELS.size() - 1));
         int power = MIN_POWER + random.nextInt(MAX_POWER - MIN_POWER + 1);
         int year = MIN_YEAR + random.nextInt(CURRENT_YEAR - MIN_YEAR + 1);
 
