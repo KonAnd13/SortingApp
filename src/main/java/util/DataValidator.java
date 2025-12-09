@@ -1,5 +1,7 @@
 package util;
 
+import java.time.Year;
+
 public class DataValidator {
     String model;
     int power;
@@ -10,6 +12,7 @@ public class DataValidator {
         this.power = power;
         this.year = year;
     }
+
     public static boolean isValidModel(String model){
         if (model == null || model.trim().isEmpty()) {
             return false;
@@ -20,16 +23,18 @@ public class DataValidator {
         if (model.length() > 50) {
             return false;
         }
-        return true;
+        return CarModels.MODELS.contains(model.trim());
     }
+
     public static boolean isValidPower(int power){
         if (power < 1 || power > 2000) {
             return false;
         }
         return true;
     }
+
     public static boolean isValidYear(int year){
-        final int CURRENT_YEAR = java.time.Year.now().getValue();
+        final int CURRENT_YEAR = Year.now().getValue();
         final int MIN_YEAR = 1886;
 
         if (year < MIN_YEAR || year > CURRENT_YEAR) {
@@ -37,15 +42,16 @@ public class DataValidator {
         }
         return true;
     }
-    public static void validateCar() throws ValidationException {
+
+    public void validateCar() throws ValidationException {
         if (!isValidModel(this.model)) {
-            throw new ValidationException("Ошибка валидации модели: '" + this.model + "'");
+            throw new ValidationException("Ошибка валидации модели: '" + this.model + "' (модель не найдена в списке разрешенных или неверный формат)");
         }
         if (!isValidPower(this.power)) {
             throw new ValidationException("Ошибка валидации мощности: '" + this.power + "' (ожидается от 1 до 2000)");
         }
         if (!isValidYear(this.year)) {
-            final int CURRENT_YEAR = java.time.Year.now().getValue();
+            final int CURRENT_YEAR = Year.now().getValue();
             final int MIN_YEAR = 1886;
             throw new ValidationException("Ошибка валидации года выпуска: '" + this.year + "' (ожидается от " + MIN_YEAR + " до " + CURRENT_YEAR + ")");
         }
