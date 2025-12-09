@@ -62,26 +62,60 @@ public class CarSortingApp {
         }
     }
 
-    private void loadData() {
-        System.out.println("\n=== Загрузка данных ===");
+        private void loadData() {
+            System.out.println("\n=== Выбор источника данных ===");
+            System.out.println("1. Случайная генерация");
+            System.out.println("2. Ручной ввод");
+            System.out.println("3. Загрузка из файла");
+            System.out.print("Выберите источник (1-3): ");
 
-        cars.clear();
+            int sourceChoice = getUserChoice();
+            DataSource dataSource = null;
 
-        cars.add(new Car("Toyota Camry", 2018, 180));
-        cars.add(new Car("BMW 3 Series", 2020, 255));
-        cars.add(new Car("Toyota Camry", 2018, 150));
-        cars.add(new Car("Audi A4", 2020, 190));
-        cars.add(new Car("Volkswagen Passat", 2015, 150));
-        cars.add(new Car("Kia Rio", 2022, 120));
-        cars.add(new Car("BMW 3 Series", 2020, 184));
-        cars.add(new Car("Honda Civic", 2019, 158));
-        cars.add(new Car("Audi A4", 2020, 190));
-        cars.add(new Car("Ford Focus", 2017, 125));
+            try {
+                switch (sourceChoice) {
+                    case 1:
+                        dataSource = new RandomDataSource();
+                        break;
+                    case 2:
+                        dataSource = new ManualDataSource();
+                        break;
+                    case 3:
+                        dataSource = new FileDataSource();
+                        break;
+                    default:
+                        System.out.println("Неверный выбор источника данных. Возврат в меню.");
+                        return;
+                }
 
-        dataLoaded = true;
-        System.out.println("Загружено " + cars.size() + " автомобилей.");
-        System.out.println("Пример данных:");
-        showDataPreview();
+                if (dataSource == null) {
+                    System.out.println("Не удалось инициализировать источник данных.");
+                    return;
+                }
+
+                System.out.println("Загрузка данных...");
+
+                List<Car> loadedCars = dataSource.loadCars();
+
+                if (loadedCars != null && !loadedCars.isEmpty()) {
+                    this.cars = loadedCars;
+                    dataLoaded = true;
+                    System.out.println("Успешно загружено " + cars.size() + " автомобилей.");
+                    showDataPreview();
+                } else if (loadedCars != null && loadedCars.isEmpty()) {
+                    System.out.println("Данные загружены, но список пуст.");
+                    this.cars = loadedCars;
+                    dataLoaded = true;
+                } else {
+                    System.out.println("Не удалось загрузить данные (возможно, файл не найден).");
+                    dataLoaded = false;
+                }
+
+            } catch (Exception e) {
+                System.err.println("Произошла непредвиденная ошибка при загрузке данных: " + e.getMessage());
+                dataLoaded = false;
+            }
+        }
     }
 
     private void showDataPreview() {
