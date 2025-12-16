@@ -143,6 +143,10 @@ public class CarSortingApp {
     }
 
     private void sortData() {
+        if (!dataLoaded) {
+            System.out.println("\nОшибка: Данные не загружены. Сначала загрузите данные.");
+            return;
+        }
         System.out.println("\nCпособы сортировки:");
         System.out.println("1. Мощность, год, модель");
         System.out.println("2. Год, мощность, модель");
