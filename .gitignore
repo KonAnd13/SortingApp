@@ -130,8 +130,8 @@ temp/
 tmp/
 
 # Application specific
-# Keep the example cars.txt file for testing
-# cars.txt
+# Keep the example carsValid.txt file for testing
+# carsValid.txt
 
 # User-generated test files
 test_*.txt

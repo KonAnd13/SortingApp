@@ -1,7 +1,12 @@
 package util;
 
 import domain.Car;
-import service.sorting.*;
+import service.datasource.DataSource;
+import service.datasource.FileDataSource;
+import service.datasource.ManualDataSource;
+import service.datasource.RandomDataSource;
+import service.sorting.SortStrategy;
+import service.sorting.YearPowerModelSortStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,13 +15,11 @@ import java.util.Scanner;
 public class CarSortingApp {
     private List<Car> cars;
     private Scanner scanner;
-    private Sorter sorter;
     private boolean dataLoaded = false;
 
     public CarSortingApp() {
         this.cars = new ArrayList<>();
         this.scanner = new Scanner(System.in);
-        this.sorter = new Sorter();
     }
 
     public void run() {
@@ -66,27 +69,60 @@ public class CarSortingApp {
         }
     }
 
-    private void loadData() {
-        System.out.println("\n=== Загрузка данных ===");
+        private void loadData() {
+            System.out.println("\n=== Выбор источника данных ===");
+            System.out.println("1. Случайная генерация");
+            System.out.println("2. Ручной ввод");
+            System.out.println("3. Загрузка из файла");
+            System.out.print("Выберите источник (1-3): ");
 
-        cars.clear();
+            int sourceChoice = getUserChoice();
+            DataSource dataSource = null;
 
-        cars.add(new Car("Toyota Camry", 180, 2018));
-        cars.add(new Car("BMW 3 Series", 255, 2020));
-        cars.add(new Car("Toyota Camry", 150, 2018));
-        cars.add(new Car("Audi A4", 190, 2020));
-        cars.add(new Car("Volkswagen Passat", 150, 2015));
-        cars.add(new Car("Kia Rio", 120, 2022));
-        cars.add(new Car("BMW 3 Series", 184, 2020));
-        cars.add(new Car("Honda Civic", 158, 2019));
-        cars.add(new Car("Audi A4", 190, 2020));
-        cars.add(new Car("Ford Focus", 125, 2017));
+            try {
+                switch (sourceChoice) {
+                    case 1:
+                        dataSource = new RandomDataSource();
+                        break;
+                    case 2:
+                        dataSource = new ManualDataSource();
+                        break;
+                    case 3:
+                        dataSource = new FileDataSource("src/main/resources/carsValid.txt");
+                        break;
+                    default:
+                        System.out.println("Неверный выбор источника данных. Возврат в меню.");
+                        return;
+                }
 
-        dataLoaded = true;
-        System.out.println("Загружено " + cars.size() + " автомобилей.");
-        System.out.println("Пример данных:");
-        showDataPreview();
-    }
+                if (dataSource == null) {
+                    System.out.println("Не удалось инициализировать источник данных.");
+                    return;
+                }
+
+                System.out.println("Загрузка данных...");
+
+                List<Car> loadedCars = dataSource.loadCars();
+
+                if (loadedCars != null && !loadedCars.isEmpty()) {
+                    this.cars = loadedCars;
+                    dataLoaded = true;
+                    System.out.println("Успешно загружено " + cars.size() + " автомобилей.");
+                    showDataPreview();
+                } else if (loadedCars != null && loadedCars.isEmpty()) {
+                    System.out.println("Данные загружены, но список пуст.");
+                    this.cars = loadedCars;
+                    dataLoaded = true;
+                } else {
+                    System.out.println("Не удалось загрузить данные (возможно, файл не найден).");
+                    dataLoaded = false;
+                }
+
+            } catch (Exception e) {
+                System.err.println("Произошла непредвиденная ошибка при загрузке данных: " + e.getMessage());
+                dataLoaded = false;
+            }
+        }
 
     private void showDataPreview() {
         if (cars.isEmpty()) {
@@ -107,28 +143,21 @@ public class CarSortingApp {
             System.out.println("\nОшибка: Данные не загружены. Сначала загрузите данные.");
             return;
         }
-        System.out.println("\nCпособы сортировки:");
-        System.out.println("1. Мощность, год, модель");
-        System.out.println("2. Год, мощность, модель");
-        System.out.print("Выберите опцию: ");
 
-        int choice = getUserChoice();
+        System.out.println("\n=== Сортировка данных ===");
+        System.out.println("Выполняется сортировка по году, мощности и модели...");
 
-        switch (choice) {
-            case 1:
-                sorter.setSortStrategy(new PowerYearModelSortStrategy());
-                break;
-            case 2:
-                sorter.setSortStrategy(new YearPowerModelSortStrategy());
-                break;
-            default:
-                System.out.println("Неверный выбор. Попробуйте снова.");
-                return;
-        }
+        SortStrategy<Car> strategy = new YearPowerModelSortStrategy();
 
-        sorter.sort(cars);
+        long startTime = System.currentTimeMillis();
 
-        System.out.println("Данные отсортированы");
+        strategy.sort(cars);
+
+        long endTime = System.currentTimeMillis();
+
+        System.out.println("Сортировка завершена.");
+        System.out.println("Время выполнения: " + (endTime - startTime) + " мс");
+        System.out.println("Отсортировано " + cars.size() + " автомобилей.");
     }
 
     private void showData() {

@@ -1,0 +1,20 @@
+Toyota Camry;180;2018
+BMW 3 Series;255;2020
+Toyota Corolla;150;2022
+Audi A4;190;2021
+Volkswagen Golf;150;2019
+Kia Rio;120;2022
+Mercedes-Benz C-Class;184;2020
+Honda Civic;158;2019
+Nissan Qashqai;144;2020
+Ford Focus;125;2017
+Subaru Forester;171;2021
+Jeep Wrangler;285;2023
+Mazda CX-5;190;2022
+Volvo XC90;310;2023
+Porsche 911;450;2024
+Hyundai Tucson;187;2022
+Land Rover Defender;296;2023
+Mini Cooper;136;2021
+Chevrolet Corvette;490;2024
+Tesla Model 3;283;2023
