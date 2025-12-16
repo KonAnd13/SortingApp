@@ -1,6 +1,8 @@
-package service.sorting;
+package util;
 
 import domain.Car;
+import service.sorting.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -8,11 +10,13 @@ import java.util.Scanner;
 public class CarSortingApp {
     private List<Car> cars;
     private Scanner scanner;
+    private Sorter sorter;
     private boolean dataLoaded = false;
 
     public CarSortingApp() {
         this.cars = new ArrayList<>();
         this.scanner = new Scanner(System.in);
+        this.sorter = new Sorter();
     }
 
     public void run() {
@@ -67,16 +71,16 @@ public class CarSortingApp {
 
         cars.clear();
 
-        cars.add(new Car("Toyota Camry", 2018, 180));
-        cars.add(new Car("BMW 3 Series", 2020, 255));
-        cars.add(new Car("Toyota Camry", 2018, 150));
-        cars.add(new Car("Audi A4", 2020, 190));
-        cars.add(new Car("Volkswagen Passat", 2015, 150));
-        cars.add(new Car("Kia Rio", 2022, 120));
-        cars.add(new Car("BMW 3 Series", 2020, 184));
-        cars.add(new Car("Honda Civic", 2019, 158));
-        cars.add(new Car("Audi A4", 2020, 190));
-        cars.add(new Car("Ford Focus", 2017, 125));
+        cars.add(new Car("Toyota Camry", 180, 2018));
+        cars.add(new Car("BMW 3 Series", 255, 2020));
+        cars.add(new Car("Toyota Camry", 150, 2018));
+        cars.add(new Car("Audi A4", 190, 2020));
+        cars.add(new Car("Volkswagen Passat", 150, 2015));
+        cars.add(new Car("Kia Rio", 120, 2022));
+        cars.add(new Car("BMW 3 Series", 184, 2020));
+        cars.add(new Car("Honda Civic", 158, 2019));
+        cars.add(new Car("Audi A4", 190, 2020));
+        cars.add(new Car("Ford Focus", 125, 2017));
 
         dataLoaded = true;
         System.out.println("Загружено " + cars.size() + " автомобилей.");
@@ -103,21 +107,28 @@ public class CarSortingApp {
             System.out.println("\nОшибка: Данные не загружены. Сначала загрузите данные.");
             return;
         }
+        System.out.println("\nCпособы сортировки:");
+        System.out.println("1. Мощность, год, модель");
+        System.out.println("2. Год, мощность, модель");
+        System.out.print("Выберите опцию: ");
 
-        System.out.println("\n=== Сортировка данных ===");
-        System.out.println("Выполняется сортировка по году, мощности и модели...");
+        int choice = getUserChoice();
 
-        SortStrategy<Car> strategy = new YearPowerModelSortStrategy();
+        switch (choice) {
+            case 1:
+                sorter.setSortStrategy(new PowerYearModelSortStrategy());
+                break;
+            case 2:
+                sorter.setSortStrategy(new YearPowerModelSortStrategy());
+                break;
+            default:
+                System.out.println("Неверный выбор. Попробуйте снова.");
+                return;
+        }
 
-        long startTime = System.currentTimeMillis();
+        sorter.sort(cars);
 
-        strategy.sort(cars);
-
-        long endTime = System.currentTimeMillis();
-
-        System.out.println("Сортировка завершена.");
-        System.out.println("Время выполнения: " + (endTime - startTime) + " мс");
-        System.out.println("Отсортировано " + cars.size() + " автомобилей.");
+        System.out.println("Данные отсортированы");
     }
 
     private void showData() {
