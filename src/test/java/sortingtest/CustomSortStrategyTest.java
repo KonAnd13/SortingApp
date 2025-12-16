@@ -18,16 +18,12 @@ public class CustomSortStrategyTest {
             "Проверка, что автомобили с нечетными годами не сортируются.";
     private static final String MIXED_YEARS_SORT_TEST_NAME =
             "Проверка сортировки списка со смешанными годами выпуска.";
-    private static final String ONLY_EVEN_YEARS_TEST_NAME =
-            "Проверка сортировки списка только с четными годами выпуска.";
     private static final String EMPTY_LIST_TEST_NAME =
             "Проверка сортировки пустого списка.";
     private static final String SINGLE_ELEMENT_EVEN_TEST_NAME =
             "Проверка сортировки списка с одним элементом (четный год).";
     private static final String SINGLE_ELEMENT_ODD_TEST_NAME =
             "Проверка сортировки списка с одним элементом (нечетный год).";
-    private static final String PRESERVE_ODD_POSITIONS_TEST_NAME =
-            "Проверка сохранения позиций автомобилей с нечетными годами.";
     private static final String EQUAL_EVEN_YEARS_TEST_NAME =
             "Проверка сортировки при одинаковых четных годах.";
     private static final String COMPLEX_MIXED_TEST_NAME =
