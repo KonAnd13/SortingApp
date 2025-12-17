@@ -5,37 +5,37 @@ import java.util.List;
 
 public class YearPowerModelSortStrategy implements SortStrategy<Car> {
     @Override
-    public void sort(List<Car> list) {
-        for (int i = 0; i < list.size() - 1; i++) {
-            for (int j = 0; j < list.size() - i - 1; j++) {
-                Car car1 = list.get(j);
-                Car car2 = list.get(j + 1);
+    public void sort(List<Car> cars) {
+        int n = cars.size();
+        boolean swapped;
 
-                if (car1.getYear() != car2.getYear()) {
-                    if (car1.getYear() > car2.getYear()) {
-                        swap(list, j);
-                    }
-                    continue;
-                }
-
-                if (car1.getPower() != car2.getPower()) {
-                    if (car1.getPower() > car2.getPower()) {
-                        swap(list, j);
-                    }
-                    continue;
-                }
-
-                if (car1.getModel().compareTo(car2.getModel()) > 0) {
-                    swap(list, j);
+        for (int i = 0; i < n - 1; i++) {
+            swapped = false;
+            for (int j = 0; j < n - i - 1; j++) {
+                if (compare(cars.get(j), cars.get(j + 1)) > 0) {
+                    Car temp = cars.get(j);
+                    cars.set(j, cars.get(j + 1));
+                    cars.set(j + 1, temp);
+                    swapped = true;
                 }
             }
+            if (!swapped)
+                break;
         }
     }
 
-    private void swap(List<Car> list, int index) {
+    private int compare(Car car1, Car car2) {
+        int yearCompare = Integer.compare(car1.getYear(), car2.getYear());
+        if (yearCompare != 0) {
+            return yearCompare;
+        }
 
-        Car temp = list.get(index);
-        list.set(index, list.get(index + 1));
-        list.set(index + 1, temp);
+        int powerCompare = Integer.compare(car1.getPower(), car2.getPower());
+        if (powerCompare != 0) {
+            return powerCompare;
+        }
+
+        int modelCompare = car1.getModel().compareTo(car2.getModel());
+        return modelCompare;
     }
 }

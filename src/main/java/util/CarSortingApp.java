@@ -62,7 +62,7 @@ public class CarSortingApp {
         System.out.println("2. Отсортировать данные");
         System.out.println("3. Показать данные");
         System.out.println("4. Выход");
-        System.out.print("Выберите опцию: ");
+        System.out.print("\nВыберите опцию: ");
     }
 
     private int getUserChoice() {
@@ -104,21 +104,18 @@ public class CarSortingApp {
                     return;
                 }
 
-                System.out.println("Загрузка данных...");
-
                 List<Car> loadedCars = dataSource.loadCars();
 
                 if (loadedCars != null && !loadedCars.isEmpty()) {
                     this.cars = loadedCars;
                     dataLoaded = true;
                     System.out.println("Успешно загружено " + cars.size() + " автомобилей.");
-                    showDataPreview();
                 } else if (loadedCars != null && loadedCars.isEmpty()) {
                     System.out.println("Данные загружены, но список пуст.");
                     this.cars = loadedCars;
                     dataLoaded = true;
                 } else {
-                    System.out.println("Не удалось загрузить данные (возможно, файл не найден).");
+                    System.out.println("Не удалось загрузить данные!");
                     dataLoaded = false;
                 }
 
@@ -128,30 +125,16 @@ public class CarSortingApp {
             }
         }
 
-    private void showDataPreview() {
-        if (cars.isEmpty()) {
-            System.out.println("Нет данных для отображения.");
-            return;
-        }
-
-        System.out.println("Первые 3 записи:");
-        for (int i = 0; i < Math.min(3, cars.size()); i++) {
-            Car car = cars.get(i);
-            System.out.printf("%d. %s, %d год, %d л.с.\n",
-                    i + 1, car.getModel(), car.getYear(), car.getPower());
-        }
-    }
-
     private void sortData() {
         if (!dataLoaded) {
             System.out.println("\nОшибка: Данные не загружены. Сначала загрузите данные.");
             return;
         }
         System.out.println("\nCпособы сортировки:");
-        System.out.println("1. Мощность, год, модель");
-        System.out.println("2. Год, мощность, модель");
-        System.out.println("3. Только четные года");
-        System.out.print("Выберите опцию: ");
+        System.out.println("1. Мощность -> год -> модель");
+        System.out.println("2. Год -> мощность -> модель");
+        System.out.println("3. По году производства (четные)");
+        System.out.print("\nВыберите опцию: ");
 
         int choice = getUserChoice();
 
@@ -171,7 +154,7 @@ public class CarSortingApp {
         }
 
         sorter.sort(cars);
-        System.out.println("Данные отсортированы");
+        System.out.println("\nДанные отсортированы");
     }
 
     private void showData() {

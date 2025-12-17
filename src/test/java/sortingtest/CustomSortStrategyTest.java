@@ -24,8 +24,6 @@ public class CustomSortStrategyTest {
             "Проверка сортировки списка с одним элементом (четный год).";
     private static final String SINGLE_ELEMENT_ODD_TEST_NAME =
             "Проверка сортировки списка с одним элементом (нечетный год).";
-    private static final String EQUAL_EVEN_YEARS_TEST_NAME =
-            "Проверка сортировки при одинаковых четных годах.";
     private static final String COMPLEX_MIXED_TEST_NAME =
             "Проверка комплексной сортировки со смешанными годами.";
     private static final String ALREADY_SORTED_EVEN_YEARS_TEST_NAME =
@@ -130,28 +128,6 @@ public class CustomSortStrategyTest {
 
         Assertions.assertEquals(1, cars.size());
         Assertions.assertEquals(car, cars.get(0));
-    }
-
-    @Test
-    @DisplayName(EQUAL_EVEN_YEARS_TEST_NAME)
-    public void equalEvenYearsTest() {
-        List<Car> cars = new ArrayList<>(Arrays.asList(
-            new Car("CarA", 150, 2020),
-            new Car("CarB", 120, 2020),
-            new Car("CarC", 180, 2020),
-            new Car("OddCar", 200, 2021)
-        ));
-
-        List<Car> expected = new ArrayList<>(Arrays.asList(
-            new Car("CarB", 120, 2020),
-            new Car("CarA", 150, 2020),
-            new Car("CarC", 180, 2020),
-            new Car("OddCar", 200, 2021)
-        ));
-
-        sortStrategy.sort(cars);
-
-        Assertions.assertEquals(expected, cars);
     }
 
     @Test

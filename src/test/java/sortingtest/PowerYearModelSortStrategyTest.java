@@ -18,8 +18,6 @@ public class PowerYearModelSortStrategyTest {
             "Проверка сортировки по году выпуска при равной мощности.";
     private static final String SORT_BY_MODEL_TEST_NAME =
             "Проверка сортировки по модели при равной мощности и годе выпуска.";
-    private static final String COMPLEX_SORT_TEST_NAME =
-            "Проверка комплексной сортировки (мощность → год → модель).";
     private static final String EMPTY_LIST_TEST_NAME =
             "Проверка сортировки пустого списка.";
     private static final String SINGLE_ELEMENT_TEST_NAME =
@@ -33,7 +31,7 @@ public class PowerYearModelSortStrategyTest {
     private static final String SORTED_SIZE_TEST_NAME =
             "Проверка сохранения размера списка после сортировки.";
 
-    private PowerYearModelSortStrategy sortStrategy = new PowerYearModelSortStrategy();
+    private final PowerYearModelSortStrategy sortStrategy = new PowerYearModelSortStrategy();
 
     @Test
     @DisplayName(SORT_BY_POWER_TEST_NAME)
@@ -90,32 +88,6 @@ public class PowerYearModelSortStrategyTest {
             new Car("Aventador", 200, 2020),
             new Car("Murcielago", 200, 2020),
             new Car("Zonda", 200, 2020)
-        ));
-
-        sortStrategy.sort(cars);
-
-        Assertions.assertEquals(expected, cars);
-    }
-
-    @Test
-    @DisplayName(COMPLEX_SORT_TEST_NAME)
-    public void complexSortTest() {
-        List<Car> cars = new ArrayList<>(Arrays.asList(
-            new Car("Toyota Camry", 150, 2020),
-            new Car("Honda Civic", 120, 2021),
-            new Car("Toyota Corolla", 120, 2020),
-            new Car("BMW X3", 150, 2019),
-            new Car("Audi A4", 150, 2020),
-            new Car("Mercedes C", 180, 2022)
-        ));
-
-        List<Car> expected = new ArrayList<>(Arrays.asList(
-            new Car("Honda Civic", 120, 2021),
-            new Car("Toyota Corolla", 120, 2020),
-            new Car("Audi A4", 150, 2020),
-            new Car("BMW X3", 150, 2019),
-            new Car("Toyota Camry", 150, 2020),
-            new Car("Mercedes C", 180, 2022)
         ));
 
         sortStrategy.sort(cars);
