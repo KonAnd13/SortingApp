@@ -1,4 +1,4 @@
-package test;
+package datasourcetest;
 
 import domain.Car;
 import service.datasource.RandomDataSource;

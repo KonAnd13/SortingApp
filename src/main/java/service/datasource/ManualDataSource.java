@@ -11,24 +11,16 @@ import java.util.Scanner;
 
 public class ManualDataSource implements DataSource {
 
-    private static final String INPUT_MODEL_MSG =
-            "Название модели: ";
-    private static final String INPUT_POWER_MSG =
-            "Мощность двигателя: ";
-    private static final String INPUT_YEAR_MSG =
-            "Год выпуска: ";
-    private static final String SUCCESSFUL_INPUT_MSG =
-            "Автомобиль добавлен.";
-    private static final String INCORRECT_FORMAT_MSG =
-            "Неверный формат данных.";
-
-
-    private static final String CONTINUE_INPUT_MSG =
-            "Продолжить ввод? (y/n): ";
+    private static final String INPUT_MODEL_MSG = "Название модели: ";
+    private static final String INPUT_POWER_MSG = "Мощность двигателя: ";
+    private static final String INPUT_YEAR_MSG = "Год выпуска: ";
+    private static final String SUCCESSFUL_INPUT_MSG = "\nАвтомобиль добавлен.";
+    private static final String INCORRECT_FORMAT_MSG = "\nНеверный формат данных.";
+    private static final String CONTINUE_INPUT_MSG = "Добавить новый автомобиль? (y/n): ";
     private static final String CONTINUE_INPUT_POS = "y";
     private static final String CONTINUE_INPUT_NEG = "n";
 
-    private final Scanner in = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in);
 
     @Override
     public List<Car> loadCars() {
@@ -37,13 +29,13 @@ public class ManualDataSource implements DataSource {
         do {
             try {
                 System.out.print(INPUT_MODEL_MSG);
-                String model = in.nextLine();
+                String model = scanner.nextLine();
 
                 System.out.print(INPUT_POWER_MSG);
-                String stringPower = in.nextLine();
+                String stringPower = scanner.nextLine();
 
                 System.out.print(INPUT_YEAR_MSG);
-                String stringYear = in.nextLine();
+                String stringYear = scanner.nextLine();
 
                 int power = Integer.parseInt(stringPower);
                 int year = Integer.parseInt(stringYear);
@@ -69,7 +61,7 @@ public class ManualDataSource implements DataSource {
     private boolean continueInput() {
         while (true) {
             System.out.print(CONTINUE_INPUT_MSG);
-            switch (in.nextLine()) {
+            switch (scanner.nextLine()) {
                 case CONTINUE_INPUT_POS: return true;
                 case CONTINUE_INPUT_NEG: return false;
             }

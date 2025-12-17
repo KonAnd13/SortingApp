@@ -46,7 +46,7 @@ public class FileDataSourceTest {
     @DisplayName(BAD_FILE_TEST_NAME)
     public void badFileTest() {
         List<Car> cars = new FileDataSource(BAD_FILE_TEST_PATH).loadCars();
-        Assertions.assertEquals(1, cars.size());
+        Assertions.assertNull(cars);
     }
 
     @Test

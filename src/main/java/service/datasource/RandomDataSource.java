@@ -22,6 +22,8 @@ public class RandomDataSource implements DataSource {
 
     @Override
     public List<Car> loadCars() {
+        System.out.println("\nЗагрузка данных...");
+
         int count = requestCarCountFromUser();
 
         List<Car> cars = new ArrayList<>();
