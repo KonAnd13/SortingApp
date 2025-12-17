@@ -111,7 +111,7 @@ public class CarSortingApp {
                     dataLoaded = true;
                     System.out.println("Успешно загружено " + cars.size() + " автомобилей.");
                 } else if (loadedCars != null && loadedCars.isEmpty()) {
-                    System.out.println("Данные загружены, но список пуст.");
+                    System.out.println("Файл загружен, но список пуст.");
                     this.cars = loadedCars;
                     dataLoaded = true;
                 } else {
