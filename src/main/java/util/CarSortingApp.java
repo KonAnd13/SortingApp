@@ -1,25 +1,29 @@
 package util;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
 import domain.Car;
 import service.datasource.DataSource;
 import service.datasource.FileDataSource;
 import service.datasource.ManualDataSource;
 import service.datasource.RandomDataSource;
-import service.sorting.SortStrategy;
+import service.sorting.CustomSortStrategy;
+import service.sorting.PowerYearModelSortStrategy;
+import service.sorting.Sorter;
 import service.sorting.YearPowerModelSortStrategy;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
 
 public class CarSortingApp {
     private List<Car> cars;
     private Scanner scanner;
+    private Sorter sorter;
     private boolean dataLoaded = false;
 
     public CarSortingApp() {
         this.cars = new ArrayList<>();
         this.scanner = new Scanner(System.in);
+        this.sorter = new Sorter();
     }
 
     public void run() {
@@ -143,21 +147,31 @@ public class CarSortingApp {
             System.out.println("\nОшибка: Данные не загружены. Сначала загрузите данные.");
             return;
         }
+        System.out.println("\nCпособы сортировки:");
+        System.out.println("1. Мощность, год, модель");
+        System.out.println("2. Год, мощность, модель");
+        System.out.println("3. Только четные года");
+        System.out.print("Выберите опцию: ");
 
-        System.out.println("\n=== Сортировка данных ===");
-        System.out.println("Выполняется сортировка по году, мощности и модели...");
+        int choice = getUserChoice();
 
-        SortStrategy<Car> strategy = new YearPowerModelSortStrategy();
+        switch (choice) {
+            case 1:
+                sorter.setSortStrategy(new PowerYearModelSortStrategy());
+                break;
+            case 2:
+                sorter.setSortStrategy(new YearPowerModelSortStrategy());
+                break;
+            case 3:
+                sorter.setSortStrategy(new CustomSortStrategy());
+                break;
+            default:
+                System.out.println("Неверный выбор. Попробуйте снова.");
+                return;
+        }
 
-        long startTime = System.currentTimeMillis();
-
-        strategy.sort(cars);
-
-        long endTime = System.currentTimeMillis();
-
-        System.out.println("Сортировка завершена.");
-        System.out.println("Время выполнения: " + (endTime - startTime) + " мс");
-        System.out.println("Отсортировано " + cars.size() + " автомобилей.");
+        sorter.sort(cars);
+        System.out.println("Данные отсортированы");
     }
 
     private void showData() {
