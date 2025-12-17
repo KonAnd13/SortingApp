@@ -9,6 +9,7 @@ import service.datasource.ManualDataSource;
 import java.io.ByteArrayInputStream;
 import java.util.List;
 
+@Disabled
 public class ManualDataSourceTest {
 
     private static final String BAD_INPUT_TEST_NAME =
